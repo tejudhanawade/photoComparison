@@ -1,0 +1,56 @@
+
+.example-card {
+  max-width: 200px;
+  margin: 10px;
+}
+.thumbnail{
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 50%;
+}
+.imgDiv{
+
+  display: contents;
+}
+.contentDiv{
+  width: 100%;
+  text-align: center;
+  overflow-wrap: break-word;
+}
+
+.info-cards {
+  margin: 10px auto;
+  padding: 5px;
+  width: 500px;
+  min-height: 300px;
+}
+.table {
+  width: 100%;
+}
+.host::ng-deep .mat-card-actions, .mat-card-subtitle, .mat-card-content{
+    height: 100px;
+    margin-top: 5px;
+  }
+
+
+.scrolling-wrapper-flexbox {
+  border: 0;
+     display: flex;
+     align-items: stretch;
+     justify-content: flex-start;
+     flex-wrap: nowrap;
+     overflow-x: auto;
+     scroll-behavior: auto;
+     overflow-y: auto;
+     -webkit-overflow-scrolling: touch;
+     margin: 5px;
+     /*.card {
+       flex: 0 0 auto;
+       min-width: 150px;
+     }*/
+
+     &::-webkit-scrollbar {
+        display: none;
+   }
+}

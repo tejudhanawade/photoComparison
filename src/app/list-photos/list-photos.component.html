@@ -1,0 +1,65 @@
+<div class="container">
+
+  <div style="text-align: center;">
+    <strong>{{listingName|titlecase}}</strong>
+  </div>
+  <div class="scrolling-wrapper-flexbox">
+    <div *ngFor="let photoInfo of photoList;let i = index">
+      <mat-card class="example-card" >
+        <mat-card-header >
+          <div mat-card-avatar class="example-header-image imgDiv">
+            <img class="thumbnail" [src]="photoInfo.thumbnailUrl">
+          </div>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="contentDiv">
+              {{photoInfo.title}}
+            </div>
+            <div class="contentDiv">{{photoInfo.id}}</div>
+            <div class="contentDiv"><a [href]="photoInfo.url" target="_blank">{{photoInfo.url}}</a></div>
+        </mat-card-content>
+        <mat-card-actions style="text-align: center;">
+          <button mat-button [hidden]="!photoInfo.remove" (click)="addOrRemovePhoto(photoInfo,'remove',i)">Remove</button>
+          <!-- <ng-template #elseBlock> -->
+            <button mat-button [hidden]="photoInfo.remove" (click)="addOrRemovePhoto(photoInfo,'add',i)">Compare</button>
+          <!-- </ng-template> -->
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" [pageSize]="divPageSize" [length]="200" (page)="pageEvent=$event;onPageEvent($event)"></mat-paginator>
+
+  <div class="example-container mat-elevation-z8">
+    <div style="text-align: center; padding-top: 5px;">
+      <strong>{{tableHeading|uppercase}}</strong>
+    </div>
+    <mat-table #table [dataSource]="dataSource">
+      <ng-container matColumnDef="thumbnailUrl">
+        <mat-header-cell *matHeaderCellDef >  </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+              <img class="thumbnail" [src]="row.thumbnailUrl">
+            </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef > ID </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.id}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="url">
+        <mat-header-cell *matHeaderCellDef > URL </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.url}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="title">
+        <mat-header-cell *matHeaderCellDef > Title </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.title}} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row [@rowsAnimation]="" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator #comparePaginator [length]="dataSource?.data.length" [pageSize]="pageSize" [pageSizeOptions]="[5,10,20]"></mat-paginator>
+
+  </div>
+</div>
