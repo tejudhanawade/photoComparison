@@ -55,13 +55,14 @@ export class ListPhotosComponent implements OnInit,AfterViewInit {
   }
 
   getPhotos(pageIndex,limit){
-    console.log(pageIndex,limit,this.photosGet);
     let totalPhotos = this.photosGet.length;
     if(this.photosGet.length<(pageIndex*limit) && this.photosGet.length<=((pageIndex-1)*limit)){
       this.photoService.getPhotos(pageIndex,limit).subscribe(resp=>{
         this.photoList = resp;
         this.photosGet=this.photosGet.concat(this.photoList);
-        console.log(this.photosGet);
+      },
+      err=>{
+        console.log("something went wrong ",err.message);
       })
     }
     else if(this.photosGet.length<(pageIndex*limit) && this.photosGet.length>((pageIndex-1)*limit)){
@@ -70,12 +71,9 @@ export class ListPhotosComponent implements OnInit,AfterViewInit {
       this.photoService.getPhotos(pageIndex1,limit1).subscribe(resp=>{
         this.photosGet=this.photosGet.concat(resp);
         this.photoList =this.photosGet.slice((pageIndex-1)*limit,limit*pageIndex); ;
-        console.log(this.photosGet,resp);
       })
-      console.log("some photos already requested");
     }
     else{
-      console.log("photos already get",(pageIndex-1)*limit,limit*pageIndex);
       this.photoList = this.photosGet.slice((pageIndex-1)*limit,limit*pageIndex);
     }
   }
@@ -85,7 +83,6 @@ export class ListPhotosComponent implements OnInit,AfterViewInit {
     this.getPhotos(this.pageNo,this.divPageSize);
   }
   addOrRemovePhoto(photo,action,index){
-    console.log(index);
     if(action=='add'){
       photo['remove']=true;
       this.comparedPhotos.push(photo);
@@ -97,8 +94,6 @@ export class ListPhotosComponent implements OnInit,AfterViewInit {
     }
 
    this.dataSource.data = [...this.comparedPhotos];
-   console.log(this.dataSource.data,action);
-
   }
 
 
